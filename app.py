@@ -1,7 +1,9 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, jsonify, redirect, render_template, request, session
+from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
+
+# PASSCODE = "1234"
 
 # Configure application
 app = Flask(__name__)
@@ -29,7 +31,13 @@ def index():
         month = request.form.get("month")
         day = request.form.get("day")
         action = request.form.get("action")
+        # passcode = request.form.get("passcode")
         print(f"This is {action}")
+
+
+        # if action in ["edit", "delete"] and passcode != PASSCODE:
+        #     print(f"This is {passcode}")
+        #     return "Incorrect passcode", 403
 
         # TODO: Add the user's entry into the database
         if name and month and day and action=="add":
@@ -54,4 +62,5 @@ def index():
 
 
 if __name__ =="__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
